@@ -157,7 +157,7 @@ namespace timerelay_daemon_1
         {
             System.Drawing.Rectangle pos = AutoItX.WinGetPos(window);
             AutoItX.MouseClick("left", pos.X + 20, pos.Y + 35);
-            AutoItX.ControlSend(window, "", "", "{RIGHT}{DOWN}{DOWN}{ENTER}{ENTER}");
+            AutoItX.ControlSend(window, "", "", "{RIGHT}{DOWN}{ENTER}{ENTER}");
         }
 
         public static bool PushNewSettings(RelaySettings settingsNew)
