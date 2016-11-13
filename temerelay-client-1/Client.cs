@@ -23,15 +23,36 @@ namespace temerelay_client_1
             HttpClient client = new HttpClient();
             var content = new StringContent( JsonConvert.SerializeObject(obj)
                 , Encoding.UTF8, "application/json");
-            return client.PostAsync(address, content).Result.IsSuccessStatusCode;
+            try
+            {
+                 return client.PostAsync(address, content).Result.IsSuccessStatusCode;
+            } catch (AggregateException e)
+            {
+                return false;
+            }
         }
 
         // Create HttpCient and make a request to api/values 
         public RelaySettings GetSettings()
         {
             HttpClient client = new HttpClient();
-            string json = client.GetAsync(address).Result.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<RelaySettings>(json); 
+            try
+            {
+                var resp = client.GetAsync(address).Result;
+                if (resp.Content != null)
+                {
+                    string json = resp.Content.ReadAsStringAsync().Result;
+                    if (json.Length > 10)
+                    {
+                        return JsonConvert.DeserializeObject<RelaySettings>(json);
+                    }
+                }
+            }
+            catch (AggregateException e)
+            {
+                return null;
+            }
+            return null; 
         }
     }
 }
