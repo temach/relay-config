@@ -27,11 +27,11 @@ namespace temerelay_client_1
         }
 
         // Create HttpCient and make a request to api/values 
-        public Settings GetSettings()
+        public RelaySettings GetSettings()
         {
             HttpClient client = new HttpClient();
             string json = client.GetAsync(address).Result.Content.ReadAsStringAsync().Result;
-            return JsonConvert.DeserializeObject<Settings>(json); 
+            return JsonConvert.DeserializeObject<RelaySettings>(json); 
         }
     }
 }

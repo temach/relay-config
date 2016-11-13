@@ -31,13 +31,24 @@ namespace temerelay_client_1
 
             // get old settings
             Console.WriteLine("Sending request out there =>");
-            Settings prevSet = cl.GetSettings();
+            RelaySettings prevSet = cl.GetSettings();
 
             // make new settings
-            Settings pushSet = new Settings();
-            pushSet.impulceMode = true;
-            pushSet.impulceTimeOff = 4;
-            pushSet.impulceTimeOn = 2;
+            ChannelSettings ch1 = new ChannelSettings();
+            ch1.programNumber = 1;
+            ChannelSettings ch2 = new ChannelSettings();
+            ch2.programNumber = 0;
+            ProgramSettings pr1 = new ProgramSettings();
+            pr1.impulceMode = true;
+            pr1.impulceTimeOff = 4;
+            pr1.impulceTimeOn = 2;
+            ProgramSettings pr2 = new ProgramSettings();
+            pr2.impulceMode = true;
+            pr2.impulceTimeOff = 7;
+            pr2.impulceTimeOn = 10;
+            RelaySettings pushSet = new RelaySettings();
+            pushSet.channels = new ChannelSettings[] { ch1, ch2 };
+            pushSet.programs = new ProgramSettings[] { pr1, pr2 };
 
             // puch them
             Console.WriteLine("Sending request out there =>");
@@ -48,18 +59,14 @@ namespace temerelay_client_1
 
             // get new settings back to check
             Console.WriteLine("Sending request out there =>");
-            Settings getSet = cl.GetSettings();
+            RelaySettings getSet = cl.GetSettings();
             if (getSet != null)
             {
                 Console.WriteLine("Retreived settings.");
                 // if they are equal to pushed settings
-                if (getSet.impulceMode == pushSet.impulceMode
-                    && getSet.impulceTimeOff == pushSet.impulceTimeOff
-                    && getSet.impulceTimeOn == pushSet.impulceTimeOn
-                    // and not equal to old settings
-                    && getSet.impulceMode != prevSet.impulceMode
-                    && getSet.impulceTimeOff != prevSet.impulceTimeOff
-                    && getSet.impulceTimeOn != prevSet.impulceTimeOn)
+                if (getSet.programs[0].impulceMode == pushSet.programs[0].impulceMode
+                    && getSet.programs[0].impulceTimeOff == pushSet.programs[0].impulceTimeOff
+                    && getSet.programs[0].impulceTimeOn == pushSet.programs[0].impulceTimeOn)
                 {
                     Console.WriteLine("Test complete.");
                 }

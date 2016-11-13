@@ -6,10 +6,23 @@ using System.Threading.Tasks;
 
 namespace temerelay_client_1
 {
-    class Settings
+    public class ChannelSettings
+    {
+        public int programNumber { get; set; }
+    }
+
+    public class ProgramSettings
     {
         public bool impulceMode { get; set; }
         public int impulceTimeOn { get; set; }
         public int impulceTimeOff { get; set; }
     }
+
+    public class RelaySettings
+    {
+        public ChannelSettings[] channels { get; set; }
+        public ProgramSettings[] programs { get; set; }
+    }
+
+
 }

@@ -21,9 +21,8 @@ namespace timerelay_daemon_1
         public HttpResponseMessage Post([FromBody]RelaySettings json) 
         {
             Console.WriteLine("Accepted Post");
-            Console.WriteLine(json.impulceMode);
-            Console.WriteLine(json.impulceTimeOn);
-            Console.WriteLine(json.impulceTimeOff);
+            Console.WriteLine(string.Join<ProgramSettings>(", ", json.programs));
+            Console.WriteLine(string.Join<ChannelSettings>(", ", json.channels));
             if (RelayAutoitNavigator.PushNewSettings(json))
             {
                 return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
