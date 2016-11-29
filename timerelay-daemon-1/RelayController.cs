@@ -11,24 +11,27 @@ namespace timerelay_daemon_1
     public class RelayController : ApiController
     {
         // GET api/timerelay
-        public RelaySettings Get() 
+        public RelaySettings Get()
         {
             Console.WriteLine("Accepted Get");
             return RelayAutoitNavigator.CollectCurrentSettings();
-        } 
+        }
 
         // POST api/timerelay
-        public HttpResponseMessage Post([FromBody]RelaySettings json) 
+        public HttpResponseMessage Post([FromBody]RelaySettings json)
         {
-            Console.WriteLine("Accepted Post");
-            Console.WriteLine(string.Join<ProgramSettings>(", ", json.programs));
-            Console.WriteLine(string.Join<ChannelSettings>(", ", json.channels));
-            if (RelayAutoitNavigator.PushNewSettings(json))
+            // start heavy work in separate thread
+            new System.Threading.Tasks.Task(() =>
             {
-                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-            }
-            return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
-        } 
+                Console.WriteLine("Accepted Post");
+                Console.WriteLine(string.Join<ProgramSettings>(", ", json.programs));
+                Console.WriteLine(string.Join<ChannelSettings>(", ", json.channels));
+                RelayAutoitNavigator.PushNewSettings(json);
+            }).Start();
 
-    } 
+            // Immeidately tell the client that his work is accepteed (code 202)
+            return new HttpResponseMessage(System.Net.HttpStatusCode.Accepted);
+        }
+
+    }
 }
