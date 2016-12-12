@@ -17,7 +17,6 @@ namespace UsbLibrary
     private int product_id;
     private int vendor_id;
     private Guid device_class;
-    private IntPtr usb_event_handle;
     private SpecifiedDevice specified_device;
     private IntPtr handle;
     private IContainer components;
@@ -49,17 +48,6 @@ namespace UsbLibrary
       set
       {
         this.vendor_id = value;
-      }
-    }
-
-    [Category("Embedded Details")]
-    [Description("The Device Class the USB device belongs to")]
-    [DefaultValue("(none)")]
-    public Guid DeviceClass
-    {
-      get
-      {
-        return this.device_class;
       }
     }
 
@@ -104,15 +92,6 @@ namespace UsbLibrary
     [Category("Embedded Event")]
     public event EventHandler OnDataSend;
 
-    public UsbHidPort()
-    {
-      this.product_id = 0;
-      this.vendor_id = 0;
-      this.specified_device = (SpecifiedDevice) null;
-      this.device_class = Win32Usb.HIDGuid;
-      this.InitializeComponent();
-    }
-
     public UsbHidPort(IContainer container)
     {
       this.product_id = 0;
@@ -125,7 +104,7 @@ namespace UsbLibrary
 
     public void RegisterHandle(IntPtr Handle)
     {
-      this.usb_event_handle = Win32Usb.RegisterForUsbEvents(Handle, this.device_class);
+      Win32Usb.RegisterForUsbEvents(Handle, this.device_class);
       this.handle = Handle;
       this.CheckDevicePresent();
     }
