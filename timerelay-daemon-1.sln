@@ -16,6 +16,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiTimer", "MultiTimer\Mu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsbLibrary", "UsbLibrary\UsbLibrary.csproj", "{D506425C-C10B-41C2-8412-221B4C6231C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBInterface", "..\hidapi-csharp-bindings\USBInterface\USBInterface.csproj", "{30432D4A-0128-48E7-ADCD-249D70323611}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "USBInterfaceTest", "TestUSBInterface\USBInterfaceTest.csproj", "{E69C9EE3-BCA8-4E5D-8EFA-7EBD75B1087A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,14 @@ Global
 		{D506425C-C10B-41C2-8412-221B4C6231C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D506425C-C10B-41C2-8412-221B4C6231C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D506425C-C10B-41C2-8412-221B4C6231C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30432D4A-0128-48E7-ADCD-249D70323611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30432D4A-0128-48E7-ADCD-249D70323611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30432D4A-0128-48E7-ADCD-249D70323611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30432D4A-0128-48E7-ADCD-249D70323611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E69C9EE3-BCA8-4E5D-8EFA-7EBD75B1087A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E69C9EE3-BCA8-4E5D-8EFA-7EBD75B1087A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E69C9EE3-BCA8-4E5D-8EFA-7EBD75B1087A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E69C9EE3-BCA8-4E5D-8EFA-7EBD75B1087A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
