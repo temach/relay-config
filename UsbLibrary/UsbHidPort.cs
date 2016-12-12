@@ -5,9 +5,11 @@
 // Assembly location: C:\Program Files (x86)\Novatek-Electro\Configurator REV-302\UsbLibrary.dll
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+
 
 namespace UsbLibrary
 {
@@ -20,6 +22,7 @@ namespace UsbLibrary
     private SpecifiedDevice specified_device;
     private IntPtr handle;
     private IContainer components;
+    private List<IntPtr> SomeOfUsbEventListeners = new List<IntPtr>();
 
     [Category("Embedded Details")]
     [DefaultValue("(none)")]

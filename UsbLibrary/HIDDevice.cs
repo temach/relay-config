@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using Minimod.PrettyPrint;
+using USBInterface;
 
 namespace UsbLibrary
 {
@@ -18,6 +19,8 @@ namespace UsbLibrary
     private int m_nInputReportLength = 32;
     private int m_nOutputReportLength = 32;
     private IntPtr m_hHandle;
+
+    private USBDevice hidapi_device = new USBDevice();
 
     public int OutputReportLength
     {
@@ -62,8 +65,14 @@ namespace UsbLibrary
       }
     }
 
+    private void Initialise(USBDevice dev)
     private void Initialise(string strPath)
     {
+      
+
+
+
+
       this.m_hHandle = Win32Usb.CreateFile(strPath, 3221225472U, 0U, IntPtr.Zero, 3U, 1073741824U, IntPtr.Zero);
       if (this.m_hHandle != Win32Usb.InvalidHandleValue)
       {
@@ -162,36 +171,29 @@ namespace UsbLibrary
       return (string) null;
     }
 
+    // There is only one device that you would ever want to find.
+    // The function is written with this assumption in mind.
     public static HIDDevice FindDevice(int nVid, int nPid, Type oType)
     {
-      string empty = string.Empty;
-      string str = string.Format("vid_{0:x4}&pid_{1:x4}", (object) nVid, (object) nPid);
-      Guid hidGuid = Win32Usb.HIDGuid;
-      IntPtr classDevs = Win32Usb.SetupDiGetClassDevs(ref hidGuid, (string) null, IntPtr.Zero, 18U);
+      USBInterface.USBDevice d = new USBDevice();
       try
       {
-        Win32Usb.DeviceInterfaceData deviceInterfaceData = new Win32Usb.DeviceInterfaceData();
-        deviceInterfaceData.Size = Marshal.SizeOf((object) deviceInterfaceData);
-        for (int index = 0; Win32Usb.SetupDiEnumDeviceInterfaces(classDevs, 0U, ref hidGuid, (uint) index, ref deviceInterfaceData); ++index)
+        d.Open((ushort)nVid, (ushort)nPid);
+        if (! d.HIDisOpen)
         {
-          string devicePath = HIDDevice.GetDevicePath(classDevs, ref deviceInterfaceData);
-          if (devicePath.IndexOf(str) >= 0)
-          {
-            HIDDevice instance = (HIDDevice) Activator.CreateInstance(oType);
-            instance.Initialise(devicePath);
-            return instance;
-          }
+          throw HIDDeviceException.GenerateError(
+            string.Format("Could not open device with vid={0}, pid={0}", nVid, nPid)
+            );
         }
+        HIDDevice instance = (HIDDevice)Activator.CreateInstance(oType);
+        instance.Initialise(d);
+        return instance;
       }
       catch (Exception ex)
       {
         throw HIDDeviceException.GenerateError(ex.ToString());
       }
-      finally
-      {
-        Win32Usb.SetupDiDestroyDeviceInfoList(classDevs);
-      }
-      return (HIDDevice) null;
+      return (HIDDevice)null;
     }
 
     public virtual InputReport CreateInputReport()
