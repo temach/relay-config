@@ -15,8 +15,8 @@ namespace UsbLibrary
   public abstract class HIDDevice : Win32Usb, IDisposable
   {
     private FileStream m_oFile;
-    private int m_nInputReportLength;
-    private int m_nOutputReportLength;
+    private int m_nInputReportLength = 32;
+    private int m_nOutputReportLength = 32;
     private IntPtr m_hHandle;
 
     public int OutputReportLength
@@ -74,8 +74,6 @@ namespace UsbLibrary
         {
           Win32Usb.HidCaps oCaps;
           Win32Usb.HidP_GetCaps(lpData, out oCaps);
-          this.m_nInputReportLength = (int) oCaps.InputReportByteLength;
-          this.m_nOutputReportLength = (int) oCaps.OutputReportByteLength;
           this.m_oFile = new FileStream(new SafeFileHandle(this.m_hHandle, false), FileAccess.ReadWrite, this.m_nInputReportLength, true);
           this.BeginAsyncRead();
         }
