@@ -61,6 +61,10 @@
     <Compile Include="DataSendEventArgs.cs" />
     <Compile Include="DataRecievedEventHandler.cs" />
     <Compile Include="DataSendEventHandler.cs" />
+    <Compile Include="Minimods\Minimod.PrettyDateAndTime.Generated.cs" />
+    <Compile Include="Minimods\Minimod.PrettyPrint.Generated.cs" />
+    <Compile Include="Minimods\Minimod.PrettyText.Generated.cs" />
+    <Compile Include="Minimods\Minimod.PrettyTypeSignatures.Generated.cs" />
     <Compile Include="Win32Usb.cs" />
     <Compile Include="HIDDevice.cs" />
     <Compile Include="SpecifiedDevice.cs" />
@@ -93,6 +97,9 @@
       <Project>{30432d4a-0128-48e7-adcd-249d70323611}</Project>
       <Name>USBInterface</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
