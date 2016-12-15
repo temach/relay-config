@@ -51,7 +51,6 @@ namespace MultiTimerWinForms
       this.label1 = new Label();
       this.progressBar1 = new ProgressBar();
       this.button1 = new Button();
-      this.usb = new UsbHidPort(this.components);
       this.SuspendLayout();
       this.label1.AutoSize = true;
       this.label1.Location = new Point(54, 21);
@@ -71,8 +70,6 @@ namespace MultiTimerWinForms
       this.button1.Text = "Отмена";
       this.button1.UseVisualStyleBackColor = true;
       this.button1.Click += new EventHandler(this.button1_Click);
-      this.usb.ProductId = 23;
-      this.usb.VendorId = 1982;
       this.AutoScaleDimensions = new SizeF(6f, 13f);
       this.AutoScaleMode = AutoScaleMode.Font;
       this.ClientSize = new Size(354, 129);
