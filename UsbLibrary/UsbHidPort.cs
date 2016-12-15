@@ -18,11 +18,10 @@ namespace UsbLibrary
   {
     private int product_id;
     private int vendor_id;
-    private Guid device_class;
     private SpecifiedDevice specified_device;
-    private IntPtr handle;
+    private Control handle;
     private IContainer components;
-    private List<IntPtr> SomeOfUsbEventListeners = new List<IntPtr>();
+    private System.Threading.Timer checkDevicePresentTimer;
 
     [Category("Embedded Details")]
     [DefaultValue("(none)")]
@@ -99,71 +98,74 @@ namespace UsbLibrary
     {
       this.product_id = 0;
       this.vendor_id = 0;
+      this.checkDevicePresentTimer 
+        // start in 1000 milliseconds and every 200 milliseconds check for device
+        = new System.Threading.Timer((obj) => this.CheckDevicePresent(), null, 1000, 500);
       this.specified_device = (SpecifiedDevice) null;
-      this.device_class = Win32Usb.HIDGuid;
       container.Add((IComponent) this);
       this.InitializeComponent();
     }
 
-    public void RegisterHandle(IntPtr Handle)
+
+    public void RegisterHandle(Control mainWindow)
     {
-      Win32Usb.RegisterForUsbEvents(Handle, this.device_class);
-      this.handle = Handle;
+      Win32Usb.RegisterForUsbEvents();
+      this.handle = mainWindow;
       this.CheckDevicePresent();
     }
 
     public bool UnregisterHandle()
     {
-      return Win32Usb.UnregisterForUsbEvents(this.handle);
-    }
-
-    public void ParseMessages(ref Message m)
-    {
-      if (m.Msg != 537)
-        return;
-      switch (m.WParam.ToInt32())
-      {
-        case 32768:
-          if (this.OnDeviceArrived == null)
-            break;
-          this.OnDeviceArrived((object) this, new EventArgs());
-          this.CheckDevicePresent();
-          break;
-        case 32772:
-          if (this.OnDeviceRemoved == null)
-            break;
-          this.OnDeviceRemoved((object) this, new EventArgs());
-          this.CheckDevicePresent();
-          break;
-      }
+      return Win32Usb.UnregisterForUsbEvents();
     }
 
     public void CheckDevicePresent()
     {
-      try
+      // now when scanner calls this method, we can detect if we are in a child thead
+      // and request the same function to be called on parent thread, which means
+      // all the event triggers will work correctly.
+      if (this.handle.InvokeRequired)
+        this.handle.Invoke(new Action(this.CheckDevicePresent));
+      else
       {
         bool flag = false;
         if (this.specified_device != null)
           flag = true;
-        this.specified_device = SpecifiedDevice.FindSpecifiedDevice(this.vendor_id, this.product_id);
-        if (this.specified_device != null)
+        try
         {
-          if (this.OnSpecifiedDeviceArrived == null)
-            return;
-          this.OnSpecifiedDeviceArrived((object) this, new EventArgs());
-          this.specified_device.DataRecieved += new DataRecievedEventHandler(this.OnDataRecieved.Invoke);
-          this.specified_device.DataSend += new DataSendEventHandler(this.OnDataSend.Invoke);
+          this.specified_device = SpecifiedDevice.FindSpecifiedDevice(this.vendor_id, this.product_id);
+          if (this.specified_device != null)
+          {
+            if (this.OnSpecifiedDeviceArrived == null)
+              return;
+            this.OnSpecifiedDeviceArrived((object)this, new EventArgs());
+            this.specified_device.DataRecieved += new DataRecievedEventHandler(this.OnDataRecieved.Invoke);
+            this.specified_device.DataSend += new DataSendEventHandler(this.OnDataSend.Invoke);
+          }
+          else
+          {
+            if (this.OnSpecifiedDeviceRemoved == null || !flag)
+              return;
+            this.OnSpecifiedDeviceRemoved((object)this, new EventArgs());
+          }
         }
-        else
+        catch (Exception ex)
         {
-          if (this.OnSpecifiedDeviceRemoved == null || !flag)
-            return;
-          this.OnSpecifiedDeviceRemoved((object) this, new EventArgs());
+          Console.WriteLine(ex.ToString());
+          // The exception gets thrown in two cases: Device not on bus, Device is already under our control
+          // try to distinguish the two
+          bool can_reach_device = false;
+          try { can_reach_device = this.specified_device.hidapi_device.GetManufacturerString() != null; }
+          catch (Exception) { can_reach_device = false; }
+          // if you can not reach and old_dev_nonnull
+          if (! can_reach_device && flag)
+          {
+            if (this.OnSpecifiedDeviceRemoved != null)
+              this.OnSpecifiedDeviceRemoved((object)this, new EventArgs());
+            this.specified_device.hidapi_device.Dispose();
+            this.specified_device = null;
+          }
         }
-      }
-      catch (Exception ex)
-      {
-        Console.WriteLine(ex.ToString());
       }
     }
 

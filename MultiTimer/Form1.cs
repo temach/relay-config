@@ -3505,13 +3505,7 @@ namespace MultiTimerWinForms
     protected override void OnHandleCreated(EventArgs e)
     {
       base.OnHandleCreated(e);
-      this.usb.RegisterHandle(this.Handle);
-    }
-
-    protected override void WndProc(ref Message m)
-    {
-      this.usb.ParseMessages(ref m);
-      base.WndProc(ref m);
+      this.usb.RegisterHandle(this);
     }
 
     private void button1_Click(object sender, EventArgs e)

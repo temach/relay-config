@@ -34,68 +34,15 @@ namespace UsbLibrary
     protected const uint ERROR_IO_PENDING = 997;
     protected const uint INFINITE = 4294967295;
 
-    public static Guid HIDGuid
+
+    public static void RegisterForUsbEvents()
     {
-      get
-      {
-        Guid gHid;
-        Win32Usb.HidD_GetHidGuid(out gHid);
-        return gHid;
-      }
     }
 
-    [DllImport("hid.dll", SetLastError = true)]
-    protected static extern void HidD_GetHidGuid(out Guid gHid);
 
-    [DllImport("setupapi.dll", SetLastError = true)]
-    protected static extern IntPtr SetupDiGetClassDevs(ref Guid gClass, [MarshalAs(UnmanagedType.LPStr)] string strEnumerator, IntPtr hParent, uint nFlags);
-
-    [DllImport("setupapi.dll", SetLastError = true)]
-    protected static extern int SetupDiDestroyDeviceInfoList(IntPtr lpInfoSet);
-
-    [DllImport("setupapi.dll", SetLastError = true)]
-    protected static extern bool SetupDiEnumDeviceInterfaces(IntPtr lpDeviceInfoSet, uint nDeviceInfoData, ref Guid gClass, uint nIndex, ref Win32Usb.DeviceInterfaceData oInterfaceData);
-
-    [DllImport("setupapi.dll", SetLastError = true)]
-    protected static extern bool SetupDiGetDeviceInterfaceDetail(IntPtr lpDeviceInfoSet, ref Win32Usb.DeviceInterfaceData oInterfaceData, IntPtr lpDeviceInterfaceDetailData, uint nDeviceInterfaceDetailDataSize, ref uint nRequiredSize, IntPtr lpDeviceInfoData);
-
-    [DllImport("setupapi.dll", SetLastError = true)]
-    protected static extern bool SetupDiGetDeviceInterfaceDetail(IntPtr lpDeviceInfoSet, ref Win32Usb.DeviceInterfaceData oInterfaceData, ref Win32Usb.DeviceInterfaceDetailData oDetailData, uint nDeviceInterfaceDetailDataSize, ref uint nRequiredSize, IntPtr lpDeviceInfoData);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    protected static extern IntPtr RegisterDeviceNotification(IntPtr hwnd, Win32Usb.DeviceBroadcastInterface oInterface, uint nFlags);
-
-    [DllImport("user32.dll", SetLastError = true)]
-    protected static extern bool UnregisterDeviceNotification(IntPtr hHandle);
-
-    [DllImport("hid.dll", SetLastError = true)]
-    protected static extern bool HidD_GetPreparsedData(IntPtr hFile, out IntPtr lpData);
-
-    [DllImport("hid.dll", SetLastError = true)]
-    protected static extern bool HidD_FreePreparsedData(ref IntPtr pData);
-
-    [DllImport("hid.dll", SetLastError = true)]
-    protected static extern int HidP_GetCaps(IntPtr lpData, out Win32Usb.HidCaps oCaps);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    protected static extern IntPtr CreateFile([MarshalAs(UnmanagedType.LPStr)] string strName, uint nAccess, uint nShareMode, IntPtr lpSecurity, uint nCreationFlags, uint nAttributes, IntPtr lpTemplate);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    protected static extern int CloseHandle(IntPtr hFile);
-
-    public static IntPtr RegisterForUsbEvents(IntPtr hWnd, Guid gClass)
+    public static bool UnregisterForUsbEvents()
     {
-      Win32Usb.DeviceBroadcastInterface oInterface = new Win32Usb.DeviceBroadcastInterface();
-      oInterface.Size = Marshal.SizeOf((object) oInterface);
-      oInterface.ClassGuid = gClass;
-      oInterface.DeviceType = 5;
-      oInterface.Reserved = 0;
-      return Win32Usb.RegisterDeviceNotification(hWnd, oInterface, 0U);
-    }
-
-    public static bool UnregisterForUsbEvents(IntPtr hHandle)
-    {
-      return Win32Usb.UnregisterDeviceNotification(hHandle);
+      return true;
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

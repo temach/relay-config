@@ -20,7 +20,8 @@ namespace UsbLibrary
     private int m_nOutputReportLength = 32;
     private IntPtr m_hHandle;
 
-    private USBDevice hidapi_device = new USBDevice();
+    // public because we have to use it in one place
+    public USBDevice hidapi_device;
 
     public int OutputReportLength
     {
@@ -57,7 +58,6 @@ namespace UsbLibrary
         }
         if (!(this.m_hHandle != IntPtr.Zero))
           return;
-        Win32Usb.CloseHandle(this.m_hHandle);
       }
       catch (Exception ex)
       {
@@ -65,80 +65,48 @@ namespace UsbLibrary
       }
     }
 
+
     private void Initialise(USBDevice dev)
-    private void Initialise(string strPath)
     {
-      
-
-
-
-
-      this.m_hHandle = Win32Usb.CreateFile(strPath, 3221225472U, 0U, IntPtr.Zero, 3U, 1073741824U, IntPtr.Zero);
-      if (this.m_hHandle != Win32Usb.InvalidHandleValue)
-      {
-        IntPtr lpData;
-        if (!Win32Usb.HidD_GetPreparsedData(this.m_hHandle, out lpData))
-          throw HIDDeviceException.GenerateWithWinError("GetPreparsedData failed");
-        try
-        {
-          Win32Usb.HidCaps oCaps;
-          Win32Usb.HidP_GetCaps(lpData, out oCaps);
-          this.m_oFile = new FileStream(new SafeFileHandle(this.m_hHandle, false), FileAccess.ReadWrite, this.m_nInputReportLength, true);
-          this.BeginAsyncRead();
-        }
-        catch (Exception ex)
-        {
-          throw HIDDeviceException.GenerateWithWinError("Failed to get the detailed data from the hid.");
-        }
-        finally
-        {
-          Win32Usb.HidD_FreePreparsedData(ref lpData);
-        }
-      }
-      else
-      {
-        this.m_hHandle = IntPtr.Zero;
-        throw HIDDeviceException.GenerateWithWinError("Failed to create device file");
-      }
-    }
-
-    private void BeginAsyncRead()
-    {
-      byte[] buffer = new byte[this.m_nInputReportLength];
-      this.m_oFile.BeginRead(buffer, 0, this.m_nInputReportLength, new AsyncCallback(this.ReadCompleted), (object) buffer);
-    }
-
-    protected void ReadCompleted(IAsyncResult iResult)
-    {
-      byte[] asyncState = (byte[]) iResult.AsyncState;
       try
       {
-        this.m_oFile.EndRead(iResult);
-        try
-        {
-          InputReport inputReport = this.CreateInputReport();
-          inputReport.SetData(asyncState);
-          this.HandleDataReceived(inputReport);
-        }
-        finally
-        {
-          this.BeginAsyncRead();
-        }
+        hidapi_device = dev;
+        hidapi_device.DeviceDisconnecedEvent += this.DeviceDisconnectedHandler;
+        hidapi_device.InputReportArrivedEvent += this.ReportReceivedHandle;
+        hidapi_device.StartAsyncRead();
       }
-      catch (IOException ex)
+      catch (Exception ex)
       {
+        throw HIDDeviceException.GenerateWithWinError("Failed to get the detailed data from the hid.");
+      }
+      this.m_hHandle = IntPtr.Zero;
+    }
+
+    private void ReportReceivedHandle(object o, ReportEventArgs args)
+    {
+      // since we dont use report IDs, that means we get 31 bytes instead of 32
+      // but the logic expects 32 bytes, so add the first 0x00 byte here
+      byte[] with_command = new byte[m_nInputReportLength];
+      with_command[0] = 0;
+      Array.Copy(args.Data, 0, with_command, 1, args.Data.Length);
+      InputReport inputReport = this.CreateInputReport();
+      inputReport.SetData(with_command);
+      this.HandleDataReceived(inputReport);
+    }
+
+    private void DeviceDisconnectedHandler(object o, EventArgs a)
+    {
         this.HandleDeviceRemoved();
         if (this.OnDeviceRemoved != null)
           this.OnDeviceRemoved((object) this, new EventArgs());
         this.Dispose();
-      }
     }
 
     protected void Write(OutputReport oOutRep)
     {
       try
       {
-        this.m_oFile.Write(oOutRep.Buffer, 0, oOutRep.BufferLength);
+        hidapi_device.Write(oOutRep.Buffer);
       }
       catch (IOException ex)
       {
@@ -158,42 +126,23 @@ namespace UsbLibrary
     {
     }
 
-    private static string GetDevicePath(IntPtr hInfoSet, ref Win32Usb.DeviceInterfaceData oInterface)
-    {
-      uint nRequiredSize = 0;
-      if (!Win32Usb.SetupDiGetDeviceInterfaceDetail(hInfoSet, ref oInterface, IntPtr.Zero, 0U, ref nRequiredSize, IntPtr.Zero))
-      {
-        Win32Usb.DeviceInterfaceDetailData oDetailData = new Win32Usb.DeviceInterfaceDetailData();
-        oDetailData.Size = Marshal.SizeOf(typeof (IntPtr)) != 8 ? 5 : 8;
-        if (Win32Usb.SetupDiGetDeviceInterfaceDetail(hInfoSet, ref oInterface, ref oDetailData, nRequiredSize, ref nRequiredSize, IntPtr.Zero))
-          return oDetailData.DevicePath;
-      }
-      return (string) null;
-    }
 
     // There is only one device that you would ever want to find.
     // The function is written with this assumption in mind.
     public static HIDDevice FindDevice(int nVid, int nPid, Type oType)
     {
-      USBInterface.USBDevice d = new USBDevice();
       try
       {
-        d.Open((ushort)nVid, (ushort)nPid);
-        if (! d.HIDisOpen)
-        {
-          throw HIDDeviceException.GenerateError(
-            string.Format("Could not open device with vid={0}, pid={0}", nVid, nPid)
-            );
-        }
+        // We know all of this information before hand, so just use it!
+        USBInterface.USBDevice d = new USBDevice((ushort)nVid, (ushort)nPid, null, false, 31);
         HIDDevice instance = (HIDDevice)Activator.CreateInstance(oType);
         instance.Initialise(d);
         return instance;
       }
       catch (Exception ex)
       {
-        throw HIDDeviceException.GenerateError(ex.ToString());
+        throw new Exception("Could not open device");
       }
-      return (HIDDevice)null;
     }
 
     public virtual InputReport CreateInputReport()
