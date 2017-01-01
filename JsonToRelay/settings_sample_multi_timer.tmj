@@ -1,0 +1,698 @@
+{
+  "format": 1,
+  "channel1": 1,
+  "channel2": 0,
+  "dstonoff": 1,
+  "delaystart": [
+    0,
+    0
+  ],
+  "program": {
+    "number": 1,
+    "timermode": 5,
+    "excweekdays": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "allowdayoffs": 0,
+    "allowholidays": 0,
+    "allowciclicity": 1,
+    "ribeforedelay": [
+      0,
+      0
+    ],
+    "riondelay": [
+      7,
+      0
+    ],
+    "rioffdelay": [
+      15,
+      0
+    ],
+    "rsdelay": [
+      0,
+      0
+    ],
+    "rvdelayumin": [
+      0,
+      0
+    ],
+    "rvdelayunorm": [
+      0,
+      1
+    ],
+    "rvdelayumax": [
+      0,
+      0
+    ],
+    "rfdelaylmin": [
+      0,
+      1
+    ],
+    "rfdelaylmax": [
+      0,
+      1
+    ],
+    "rvonoff": 0,
+    "rvumin": 200,
+    "rvumax": 240,
+    "rvuminhyst": 5,
+    "rvumaxhyst": 5,
+    "rfonoff": 0,
+    "rflpor": 30,
+    "rflporhyst": 5,
+    "rfcontlmin": 0,
+    "rfcontlmax": 0,
+    "lists": {
+      "listnum": 0,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 1,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 2,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 3,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 4,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 5,
+      "eventsmax": 0
+    }
+  },
+  "program": {
+    "number": 2,
+    "timermode": 0,
+    "excweekdays": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "allowdayoffs": 0,
+    "allowholidays": 0,
+    "allowciclicity": 1,
+    "ribeforedelay": [
+      0,
+      0
+    ],
+    "riondelay": [
+      0,
+      1
+    ],
+    "rioffdelay": [
+      0,
+      1
+    ],
+    "rsdelay": [
+      0,
+      0
+    ],
+    "rvdelayumin": [
+      0,
+      0
+    ],
+    "rvdelayunorm": [
+      0,
+      1
+    ],
+    "rvdelayumax": [
+      0,
+      0
+    ],
+    "rfdelaylmin": [
+      0,
+      1
+    ],
+    "rfdelaylmax": [
+      0,
+      1
+    ],
+    "rvonoff": 0,
+    "rvumin": 200,
+    "rvumax": 240,
+    "rvuminhyst": 5,
+    "rvumaxhyst": 5,
+    "rfonoff": 0,
+    "rflpor": 30,
+    "rflporhyst": 5,
+    "rfcontlmin": 0,
+    "rfcontlmax": 0,
+    "lists": {
+      "listnum": 0,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 1,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 2,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 3,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 4,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 5,
+      "eventsmax": 0
+    }
+  },
+  "program": {
+    "number": 3,
+    "timermode": 0,
+    "excweekdays": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "allowdayoffs": 0,
+    "allowholidays": 0,
+    "allowciclicity": 1,
+    "ribeforedelay": [
+      0,
+      0
+    ],
+    "riondelay": [
+      0,
+      1
+    ],
+    "rioffdelay": [
+      0,
+      1
+    ],
+    "rsdelay": [
+      0,
+      0
+    ],
+    "rvdelayumin": [
+      0,
+      0
+    ],
+    "rvdelayunorm": [
+      0,
+      1
+    ],
+    "rvdelayumax": [
+      0,
+      0
+    ],
+    "rfdelaylmin": [
+      0,
+      1
+    ],
+    "rfdelaylmax": [
+      0,
+      1
+    ],
+    "rvonoff": 0,
+    "rvumin": 200,
+    "rvumax": 240,
+    "rvuminhyst": 5,
+    "rvumaxhyst": 5,
+    "rfonoff": 0,
+    "rflpor": 30,
+    "rflporhyst": 5,
+    "rfcontlmin": 0,
+    "rfcontlmax": 0,
+    "lists": {
+      "listnum": 0,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 1,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 2,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 3,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 4,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 5,
+      "eventsmax": 0
+    }
+  },
+  "program": {
+    "number": 4,
+    "timermode": 0,
+    "excweekdays": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "allowdayoffs": 0,
+    "allowholidays": 0,
+    "allowciclicity": 1,
+    "ribeforedelay": [
+      0,
+      0
+    ],
+    "riondelay": [
+      0,
+      1
+    ],
+    "rioffdelay": [
+      0,
+      1
+    ],
+    "rsdelay": [
+      0,
+      0
+    ],
+    "rvdelayumin": [
+      0,
+      0
+    ],
+    "rvdelayunorm": [
+      0,
+      1
+    ],
+    "rvdelayumax": [
+      0,
+      0
+    ],
+    "rfdelaylmin": [
+      0,
+      1
+    ],
+    "rfdelaylmax": [
+      0,
+      1
+    ],
+    "rvonoff": 0,
+    "rvumin": 200,
+    "rvumax": 240,
+    "rvuminhyst": 5,
+    "rvumaxhyst": 5,
+    "rfonoff": 0,
+    "rflpor": 30,
+    "rflporhyst": 5,
+    "rfcontlmin": 0,
+    "rfcontlmax": 0,
+    "lists": {
+      "listnum": 0,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 1,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 2,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 3,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 4,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 5,
+      "eventsmax": 0
+    }
+  },
+  "program": {
+    "number": 5,
+    "timermode": 0,
+    "excweekdays": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "allowdayoffs": 0,
+    "allowholidays": 0,
+    "allowciclicity": 1,
+    "ribeforedelay": [
+      0,
+      0
+    ],
+    "riondelay": [
+      0,
+      1
+    ],
+    "rioffdelay": [
+      0,
+      1
+    ],
+    "rsdelay": [
+      0,
+      0
+    ],
+    "rvdelayumin": [
+      0,
+      0
+    ],
+    "rvdelayunorm": [
+      0,
+      1
+    ],
+    "rvdelayumax": [
+      0,
+      0
+    ],
+    "rfdelaylmin": [
+      0,
+      1
+    ],
+    "rfdelaylmax": [
+      0,
+      1
+    ],
+    "rvonoff": 0,
+    "rvumin": 200,
+    "rvumax": 240,
+    "rvuminhyst": 5,
+    "rvumaxhyst": 5,
+    "rfonoff": 0,
+    "rflpor": 30,
+    "rflporhyst": 5,
+    "rfcontlmin": 0,
+    "rfcontlmax": 0,
+    "lists": {
+      "listnum": 0,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 1,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 2,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 3,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 4,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 5,
+      "eventsmax": 0
+    }
+  },
+  "program": {
+    "number": 6,
+    "timermode": 0,
+    "excweekdays": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "allowdayoffs": 0,
+    "allowholidays": 0,
+    "allowciclicity": 1,
+    "ribeforedelay": [
+      0,
+      0
+    ],
+    "riondelay": [
+      0,
+      1
+    ],
+    "rioffdelay": [
+      0,
+      1
+    ],
+    "rsdelay": [
+      0,
+      0
+    ],
+    "rvdelayumin": [
+      0,
+      0
+    ],
+    "rvdelayunorm": [
+      0,
+      1
+    ],
+    "rvdelayumax": [
+      0,
+      0
+    ],
+    "rfdelaylmin": [
+      0,
+      1
+    ],
+    "rfdelaylmax": [
+      0,
+      1
+    ],
+    "rvonoff": 0,
+    "rvumin": 200,
+    "rvumax": 240,
+    "rvuminhyst": 5,
+    "rvumaxhyst": 5,
+    "rfonoff": 0,
+    "rflpor": 30,
+    "rflporhyst": 5,
+    "rfcontlmin": 0,
+    "rfcontlmax": 0,
+    "lists": {
+      "listnum": 0,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 1,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 2,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 3,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 4,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 5,
+      "eventsmax": 0
+    }
+  },
+  "program": {
+    "number": 7,
+    "timermode": 0,
+    "excweekdays": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "allowdayoffs": 0,
+    "allowholidays": 0,
+    "allowciclicity": 1,
+    "ribeforedelay": [
+      0,
+      0
+    ],
+    "riondelay": [
+      0,
+      1
+    ],
+    "rioffdelay": [
+      0,
+      1
+    ],
+    "rsdelay": [
+      0,
+      0
+    ],
+    "rvdelayumin": [
+      0,
+      0
+    ],
+    "rvdelayunorm": [
+      0,
+      1
+    ],
+    "rvdelayumax": [
+      0,
+      0
+    ],
+    "rfdelaylmin": [
+      0,
+      1
+    ],
+    "rfdelaylmax": [
+      0,
+      1
+    ],
+    "rvonoff": 0,
+    "rvumin": 200,
+    "rvumax": 240,
+    "rvuminhyst": 5,
+    "rvumaxhyst": 5,
+    "rfonoff": 0,
+    "rflpor": 30,
+    "rflporhyst": 5,
+    "rfcontlmin": 0,
+    "rfcontlmax": 0,
+    "lists": {
+      "listnum": 0,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 1,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 2,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 3,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 4,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 5,
+      "eventsmax": 0
+    }
+  },
+  "program": {
+    "number": 8,
+    "timermode": 0,
+    "excweekdays": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "allowdayoffs": 0,
+    "allowholidays": 0,
+    "allowciclicity": 1,
+    "ribeforedelay": [
+      0,
+      0
+    ],
+    "riondelay": [
+      0,
+      1
+    ],
+    "rioffdelay": [
+      0,
+      1
+    ],
+    "rsdelay": [
+      0,
+      0
+    ],
+    "rvdelayumin": [
+      0,
+      0
+    ],
+    "rvdelayunorm": [
+      0,
+      1
+    ],
+    "rvdelayumax": [
+      0,
+      0
+    ],
+    "rfdelaylmin": [
+      0,
+      1
+    ],
+    "rfdelaylmax": [
+      0,
+      1
+    ],
+    "rvonoff": 0,
+    "rvumin": 200,
+    "rvumax": 240,
+    "rvuminhyst": 5,
+    "rvumaxhyst": 5,
+    "rfonoff": 0,
+    "rflpor": 30,
+    "rflporhyst": 5,
+    "rfcontlmin": 0,
+    "rfcontlmax": 0,
+    "lists": {
+      "listnum": 0,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 1,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 2,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 3,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 4,
+      "eventsmax": 0
+    },
+    "lists": {
+      "listnum": 5,
+      "eventsmax": 0
+    }
+  }
+}
