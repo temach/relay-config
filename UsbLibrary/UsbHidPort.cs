@@ -22,6 +22,7 @@ namespace UsbLibrary
     private Control handle;
     private IContainer components;
     private System.Threading.Timer checkDevicePresentTimer;
+    private object SyncLock = new object();
 
     [Category("Embedded Details")]
     [DefaultValue("(none)")]
@@ -124,9 +125,9 @@ namespace UsbLibrary
       // now when scanner calls this method, we can detect if we are in a child thead
       // and request the same function to be called on parent thread, which means
       // all the event triggers will work correctly.
-      if (this.handle.InvokeRequired)
+      if (this.handle != null && this.handle.InvokeRequired)
         this.handle.Invoke(new Action(this.CheckDevicePresent));
-      else
+      lock (SyncLock)
       {
         bool flag = false;
         if (this.specified_device != null)
@@ -151,7 +152,7 @@ namespace UsbLibrary
         }
         catch (Exception ex)
         {
-          Console.WriteLine(ex.ToString());
+          // Console.WriteLine(ex.ToString());
           // The exception gets thrown in two cases: Device not on bus, Device is already under our control
           // try to distinguish the two
           bool can_reach_device = false;
