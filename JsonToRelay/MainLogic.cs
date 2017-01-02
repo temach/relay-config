@@ -196,29 +196,35 @@ namespace JsonToRelay
 
     public void GetSettingsClick(object sender, EventArgs e)
     {
-      if (!this.Connection.NewTypeDataSend(ModesSend.REQUEST_NUM_VERSION))
-        return;
-      this.timer1.Enabled = true;
-      this.USB_GetSequence = USB_GetSequenceEnum.GET_OPTIONS;
-      this.MyUsbSendData();
-      // read settings
-      while (this.WaitingForRead)
+      lock(this)
       {
-        this.usb_OnDataRecieved_WaitAndProcess();
+        if (!this.Connection.NewTypeDataSend(ModesSend.REQUEST_NUM_VERSION))
+          return;
+        this.timer1.Enabled = true;
+        this.USB_GetSequence = USB_GetSequenceEnum.GET_OPTIONS;
+        this.MyUsbSendData();
+        // read settings
+        while (this.WaitingForRead)
+        {
+          this.usb_OnDataRecieved_WaitAndProcess();
+        }
       }
     }
 
     public void SendSettingsClick()
     {
-      if (!this.Connection.NewTypeDataSend(ModesSend.REQUEST_NUM_VERSION))
-        return;
-      this.timer1.Enabled = true;
-      this.USB_GetSequence = USB_GetSequenceEnum.SEND_OPTIONS;
-      this.MyUsbSendData();
-      // send settings
-      while (this.WaitingForRead)
+      lock(this)
       {
-        this.usb_OnDataRecieved_WaitAndProcess();
+        if (!this.Connection.NewTypeDataSend(ModesSend.REQUEST_NUM_VERSION))
+          return;
+        this.timer1.Enabled = true;
+        this.USB_GetSequence = USB_GetSequenceEnum.SEND_OPTIONS;
+        this.MyUsbSendData();
+        // send settings
+        while (this.WaitingForRead)
+        {
+          this.usb_OnDataRecieved_WaitAndProcess();
+        }
       }
     }
 
