@@ -33,7 +33,7 @@ namespace temerelay_client_1
         }
 
         // Create HttpCient and make a request to api/values 
-        public RelaySettings GetSettings()
+        public string GetSettings()
         {
             HttpClient client = new HttpClient();
             try
@@ -44,7 +44,7 @@ namespace temerelay_client_1
                     string json = resp.Content.ReadAsStringAsync().Result;
                     if (json.Length > 10)
                     {
-                        return JsonConvert.DeserializeObject<RelaySettings>(json);
+                        return json;
                     }
                 }
             }
